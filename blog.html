@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kitaplar — sepia.land</title>
+<title>Blog — sepia.land</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -118,8 +118,14 @@ nav {
   font-weight: 300;
   font-size: clamp(2.5rem, 4vw, 4rem);
   color: var(--dark);
+  margin-bottom: 16px;
 }
 .page-title em { font-style: italic; color: var(--terra); }
+.page-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
 
 /* FİLTRELER */
 .filters {
@@ -147,88 +153,73 @@ nav {
   color: var(--cream);
 }
 
-/* KİTAP GRID */
-.books-section {
+/* BLOG GRID */
+.blog-section {
   padding: 60px 80px 100px;
 }
-.books-grid {
+.blog-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px 32px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
 }
-.book-card {
+.blog-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 4px 20px rgba(30,24,18,0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  transition: transform 0.3s ease;
 }
-.book-card:hover { transform: translateY(-8px); }
-.book-spine {
-  width: 100%;
-  aspect-ratio: 2/3;
-  border-radius: 4px 12px 12px 4px;
-  box-shadow: -4px 4px 16px rgba(30,24,18,0.2), 4px 8px 32px rgba(30,24,18,0.12);
-  display: flex;
-  align-items: flex-end;
-  padding: 20px 16px;
-  margin-bottom: 16px;
-  position: relative;
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(30,24,18,0.14);
+}
+.blog-card.featured {
+  grid-column: span 2;
+}
+.blog-card-img {
+  height: 220px;
   overflow: hidden;
 }
-.book-spine::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 6px;
-  background: rgba(0,0,0,0.2);
+.blog-card.featured .blog-card-img { height: 300px; }
+.blog-card-img-inner {
+  width: 100%; height: 100%;
+  transition: transform 0.5s ease;
 }
-.book-title-overlay {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 1rem;
-  color: rgba(247,242,234,0.9);
-  line-height: 1.3;
-}
-.book-info { padding: 0 4px; }
-.book-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1rem;
-  color: var(--dark);
-  margin-bottom: 4px;
-}
-.book-author {
-  font-size: 0.75rem;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-.book-rating { color: var(--terra); font-size: 0.75rem; }
-.book-note {
-  font-size: 0.78rem;
-  color: var(--muted);
-  line-height: 1.6;
-  margin-top: 8px;
-  font-style: italic;
-}
-
-/* ALINTI ŞERIDI */
-.quote-strip {
-  background: var(--dark);
-  padding: 80px;
-  text-align: center;
-}
-.quote-strip blockquote {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-  color: var(--cream);
-  line-height: 1.7;
-  max-width: 680px;
-  margin: 0 auto 24px;
-  opacity: 0.9;
-}
-.quote-strip cite {
-  font-size: 0.68rem;
+.blog-card:hover .blog-card-img-inner { transform: scale(1.05); }
+.blog-card-body { padding: 28px 24px; }
+.blog-tag {
+  font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--turq);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+  display: inline-block;
+}
+.tag-kitap  { background: rgba(200,90,58,0.12); color: var(--terra); }
+.tag-yoga   { background: rgba(91,188,184,0.15); color: var(--turq-deep); }
+.tag-doga   { background: rgba(122,140,90,0.15); color: var(--olive); }
+.blog-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--dark);
+  line-height: 1.35;
+  margin-bottom: 12px;
+}
+.blog-card.featured .blog-card-title { font-size: 1.7rem; }
+.blog-card-excerpt {
+  font-size: 0.82rem;
+  line-height: 1.75;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.blog-card-date {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--stone);
+  text-transform: uppercase;
 }
 
 /* FOOTER */
@@ -252,14 +243,37 @@ footer {
   color: var(--cream);
   margin-bottom: 16px;
 }
-.footer-desc { font-size: 0.82rem; line-height: 1.8; color: rgba(247,242,234,0.45); }
-.footer-col-title { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--turq); margin-bottom: 20px; }
+.footer-desc {
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: rgba(247,242,234,0.45);
+}
+.footer-col-title {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--turq);
+  margin-bottom: 20px;
+}
 .footer-links { list-style: none; }
 .footer-links li { margin-bottom: 10px; }
-.footer-links a { font-size: 0.82rem; color: rgba(247,242,234,0.5); text-decoration: none; transition: color 0.2s; }
+.footer-links a {
+  font-size: 0.82rem;
+  color: rgba(247,242,234,0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
 .footer-links a:hover { color: var(--cream); }
-.footer-bottom { display: flex; justify-content: space-between; align-items: center; }
-.footer-copy { font-size: 0.72rem; color: rgba(247,242,234,0.3); letter-spacing: 0.08em; }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-copy {
+  font-size: 0.72rem;
+  color: rgba(247,242,234,0.3);
+  letter-spacing: 0.08em;
+}
 .footer-social { display: flex; gap: 12px; }
 .social-dot {
   width: 36px; height: 36px;
@@ -360,8 +374,8 @@ footer {
 <nav>
   <a href="index.html" class="nav-logo">sepia.land</a>
   <ul class="nav-links" id="navlinks">
-    <li><a href="blog.html">Blog</a></li>
-    <li><a href="kitaplar.html" class="active">Kitaplar</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="kitaplar.html">Kitaplar</a></li>
     <li><a href="yoga.html">Yoga</a></li>
     <li><a href="galeri.html">Galeri</a></li>
     <li><a href="hakkimda.html">Hakkımda</a></li>
@@ -380,124 +394,92 @@ footer {
 </div>
 
 <div class="page-header">
-  <div class="page-eyebrow">kitaplık</div>
-  <h1 class="page-title">Son <em>okunanlar.</em></h1>
+  <div class="page-eyebrow">yazılar & notlar</div>
+  <h1 class="page-title">Son <em>notlar.</em></h1>
+
 </div>
 
 <div class="filters">
   <button class="filter-btn active">Tümü</button>
-  <button class="filter-btn">Roman</button>
-  <button class="filter-btn">Felsefe</button>
-  <button class="filter-btn">Kişisel Gelişim</button>
+  <button class="filter-btn">Kitap</button>
+  <button class="filter-btn">Yoga</button>
+  <button class="filter-btn">Doğa</button>
 </div>
 
-<section class="books-section">
-  <div class="books-grid">
+<section class="blog-section">
+  <div class="blog-grid">
 
-    <div class="book-card">
-      <div class="book-spine" style="background:linear-gradient(160deg,var(--turq-deep),var(--turq));">
-        <div class="book-title-overlay">Siddhartha</div>
+    <div class="blog-card featured">
+      <div class="blog-card-img">
+        <div class="blog-card-img-inner" style="background:linear-gradient(135deg,var(--olive-l),var(--stone-l));"></div>
       </div>
-      <div class="book-info">
-        <div class="book-name">Siddhartha</div>
-        <div class="book-author">Hermann Hesse</div>
-        <div class="book-rating">★★★★★</div>
-        <div class="book-note">İçimde bıraktığı sessizlik tarif edilemez.</div>
+      <div class="blog-card-body">
+        <span class="blog-tag tag-kitap">Kitap</span>
+        <div class="blog-card-title">Bir kitabı yavaş okumak üzerine — sabırsızlığa karşı sayfa sabırsızlığı</div>
+        <div class="blog-card-excerpt">Her şeyin hızlandığı bir dünyada, bir kitabı yavaşça bitirmenin ne anlama geldiğini düşündüm...</div>
+        <div class="blog-card-date">8 Mart 2026</div>
       </div>
     </div>
 
-    <div class="book-card">
-      <div class="book-spine" style="background:linear-gradient(160deg,var(--terra),var(--terra-l));">
-        <div class="book-title-overlay">Bülbülü Öldürmek</div>
+    <a href="https://sepialand9.wordpress.com/2026/03/14/sabah-rutini-mat-nefes-bes-dakika/" target="_blank" style="text-decoration:none;color:inherit;">
+    <div class="blog-card">
+      <div class="blog-card-img">
+        <div class="blog-card-img-inner" style="background:linear-gradient(135deg,var(--turq),var(--turq-deep));"></div>
       </div>
-      <div class="book-info">
-        <div class="book-name">Bülbülü Öldürmek</div>
-        <div class="book-author">Harper Lee</div>
-        <div class="book-rating">★★★★★</div>
-        <div class="book-note">Her sayfada bir şey öğrendim.</div>
+      <div class="blog-card-body">
+        <span class="blog-tag tag-yoga">Yoga</span>
+        <div class="blog-card-title">Sabah rutini: mat, nefes, beş dakika</div>
+        <div class="blog-card-date">14 Mart 2026</div>
+      </div>
+    </div>
+    </a>
+
+    <div class="blog-card">
+      <div class="blog-card-img">
+        <div class="blog-card-img-inner" style="background:linear-gradient(135deg,var(--olive),var(--olive-l));"></div>
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-tag tag-doga">Doğa</span>
+        <div class="blog-card-title">Ormanda yürümek neden iyi hissettiriyor?</div>
+        <div class="blog-card-date">24 Şubat 2026</div>
       </div>
     </div>
 
-    <div class="book-card">
-      <div class="book-spine" style="background:linear-gradient(160deg,var(--olive),var(--olive-l));">
-        <div class="book-title-overlay">Küçük Prens</div>
+    <div class="blog-card">
+      <div class="blog-card-img">
+        <div class="blog-card-img-inner" style="background:linear-gradient(135deg,var(--terra-l),var(--terra));"></div>
       </div>
-      <div class="book-info">
-        <div class="book-name">Küçük Prens</div>
-        <div class="book-author">Antoine de Saint-Exupéry</div>
-        <div class="book-rating">★★★★★</div>
-        <div class="book-note">Her yaşta farklı bir şey söylüyor.</div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <div class="book-spine" style="background:linear-gradient(160deg,var(--stone),var(--stone-l));">
-        <div class="book-title-overlay">Deniz Feneri</div>
-      </div>
-      <div class="book-info">
-        <div class="book-name">Deniz Feneri</div>
-        <div class="book-author">Virginia Woolf</div>
-        <div class="book-rating">★★★★</div>
-        <div class="book-note">Yavaş okunacak bir kitap.</div>
+      <div class="blog-card-body">
+        <span class="blog-tag tag-kitap">Kitap</span>
+        <div class="blog-card-title">Siddhartha — içimde bıraktığı sessizlik</div>
+        <div class="blog-card-date">15 Şubat 2026</div>
       </div>
     </div>
 
-    <div class="book-card">
-      <div class="book-spine" style="background:linear-gradient(160deg,#7a5a8a,#a07ab0);">
-        <div class="book-title-overlay">Yüzyıllık Yalnızlık</div>
+    <div class="blog-card">
+      <div class="blog-card-img">
+        <div class="blog-card-img-inner" style="background:linear-gradient(135deg,var(--stone-l),var(--stone));"></div>
       </div>
-      <div class="book-info">
-        <div class="book-name">Yüzyıllık Yalnızlık</div>
-        <div class="book-author">Gabriel García Márquez</div>
-        <div class="book-rating">★★★★★</div>
-        <div class="book-note">Büyülü bir dünyaya kapı açıyor.</div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <div class="book-spine" style="background:linear-gradient(160deg,var(--turq-light),var(--turq));">
-        <div class="book-title-overlay">Simyacı</div>
-      </div>
-      <div class="book-info">
-        <div class="book-name">Simyacı</div>
-        <div class="book-author">Paulo Coelho</div>
-        <div class="book-rating">★★★★</div>
-        <div class="book-note">Kaderimizi aramak üzerine.</div>
+      <div class="blog-card-body">
+        <span class="blog-tag tag-yoga">Yoga</span>
+        <div class="blog-card-title">Pilates ile tanışmak — ilk üç ayın özeti</div>
+        <div class="blog-card-date">8 Şubat 2026</div>
       </div>
     </div>
 
-    <div class="book-card">
-      <div class="book-spine" style="background:linear-gradient(160deg,var(--sun),var(--terra-l));">
-        <div class="book-title-overlay">Suç ve Ceza</div>
+    <div class="blog-card">
+      <div class="blog-card-img">
+        <div class="blog-card-img-inner" style="background:linear-gradient(135deg,var(--turq-light),var(--olive-l));"></div>
       </div>
-      <div class="book-info">
-        <div class="book-name">Suç ve Ceza</div>
-        <div class="book-author">Fyodor Dostoyevski</div>
-        <div class="book-rating">★★★★★</div>
-        <div class="book-note">Ağır ama bırakamadım.</div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <div class="book-spine" style="background:linear-gradient(160deg,var(--olive-l),var(--olive));">
-        <div class="book-title-overlay">Steppenwolf</div>
-      </div>
-      <div class="book-info">
-        <div class="book-name">Steppenwolf</div>
-        <div class="book-author">Hermann Hesse</div>
-        <div class="book-rating">★★★★</div>
-        <div class="book-note">İçimdeki çelişkileri anlattı.</div>
+      <div class="blog-card-body">
+        <span class="blog-tag tag-doga">Doğa</span>
+        <div class="blog-card-title">Deniz kenarında bir sabah — sadece oturmak</div>
+        <div class="blog-card-date">1 Şubat 2026</div>
       </div>
     </div>
 
   </div>
 </section>
-
-<!-- ALINTI -->
-<div class="quote-strip">
-  <blockquote>"Her kitap ruhunuza açılan pencere. İçimize ışık dolması için yeni kitaplara ihtiyacımız var."</blockquote>
-  <cite>— sepia.land</cite>
-</div>
 
 <footer>
   <div class="footer-top">
